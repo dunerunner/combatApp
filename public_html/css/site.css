@@ -1,0 +1,248 @@
+/* RESET CSS */
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol,
+ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+/* VARIABLES */
+/* MIXINS*/
+/* CONTENT */
+html,
+body {
+  height: 100%;
+}
+body {
+  position: relative;
+}
+.page_header {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  box-sizing: border-box;
+  border-bottom: 1px solid #000000;
+  padding: 20px;
+  text-align: center;
+  font: bold 30px/35px Tahoma;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+.stats {
+  padding: 75px 0 0 0;
+}
+.stats-header {
+  padding: 10px;
+  font: 20px/25px Tahoma;
+  font-weight: bold;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+.stats-enemycount {
+  border-bottom: 1px solid #000000;
+  padding: 10px;
+  font: 20px/25px Tahoma;
+}
+.stats-list {
+  font-size: 0;
+}
+.stats-list-element {
+  display: inline-block;
+  width: 25%;
+  box-sizing: border-box;
+  border-right: 1px solid #000000;
+  border-bottom: 1px solid #000000;
+  padding: 10px;
+  font: 20px/25px Tahoma;
+}
+.stats-list-element__header {
+  margin: 10px 0;
+  text-align: center;
+}
+.stats-list-element__label {
+  display: block;
+  float: left;
+  clear: left;
+}
+.stats-list-element__input {
+  float: right;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  padding: 0 5px;
+}
+.stats-control {
+  display: block;
+  width: 250px;
+  height: 30px;
+  margin: 10px auto;
+  border: 2px solid #000000;
+  border-radius: 15px;
+  font: 20px Tahoma;
+  cursor: pointer;
+  outline: none;
+}
+.stats-control:hover {
+  border: 2px solid #ffffff;
+  color: #ffffff;
+  background: #000000;
+}
+.stats-control:active {
+  border: 2px solid #000000;
+  color: #000000;
+  background: #ffffff;
+}
+.combat {
+  display: table;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  border: 1px solid #000000;
+  padding: 75px 0 0 0;
+  font: 20px/25px Tahoma;
+}
+.combat-player,
+.combat-enemies {
+  display: table-cell;
+  width: 25%;
+  vertical-align: middle;
+}
+.combat-log {
+  position: relative;
+  display: table-cell;
+  width: 50%;
+  box-sizing: border-box;
+  border-left: 1px solid #000000;
+  border-right: 1px solid #000000;
+}
+.combat-log-header {
+  clear: both;
+  text-align: center;
+  font-weight: bold;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+.combat-log-controls {
+  overflow: hidden;
+}
+.combat-log-rounds {
+  position: absolute;
+  top: 75px;
+  bottom: 0px;
+  width: 100%;
+  overflow-y: scroll;
+}
+.combat-log-hp,
+.combat-log-critfail {
+  color: #ff0000;
+}
+.combat-log-crit {
+  color: #00ff00;
+}
+.combat-control {
+  display: block;
+  float: right;
+  width: 250px;
+  height: 30px;
+  margin: 10px;
+  border: 2px solid #000000;
+  border-radius: 15px;
+  font: 20px Tahoma;
+  cursor: pointer;
+  outline: none;
+}
+.combat-control:hover {
+  border: 2px solid #ffffff;
+  color: #ffffff;
+  background: #000000;
+}
+.combat-control:active {
+  border: 2px solid #000000;
+  color: #000000;
+  background: #ffffff;
+}
+.combat-round {
+  margin: 10px;
+}
+.combat-round-name {
+  color: #bbbbbb;
+}
+.fighter {
+  margin: 10px 5%;
+}
+.fighter-name,
+.fighter-damage,
+.fighter-hp {
+  text-align: center;
+}
+.fighter-img {
+  height: 120px;
+  width: 120px;
+  margin: 10px auto;
+}
+.fighter-img.player {
+  background: url(../img/player.jpg) no-repeat;
+  background-size: contain;
+}
+.fighter-img.player.winner {
+  background: url(../img/win.jpg) no-repeat;
+  background-size: contain;
+}
+.fighter-img.player.defeated {
+  background: url(../img/lose.jpg) no-repeat center;
+  background-size: contain;
+}
+.fighter-img.enemy {
+  background: url(../img/enemy.jpg) no-repeat;
+  background-size: contain;
+}
+.fighter-img.enemy.defeated {
+  background: url(../img/enemy-defeated.jpg) no-repeat;
+  background-size: contain;
+}
+.fighter-hpline {
+  height: 25px;
+  margin: 10px;
+  background: #ff0000;
+}
+.fighter-hpline-curhp {
+  height: 25px;
+  background: #00ff00;
+}
+.targetselect {
+  float: left;
+  padding: 10px;
+}
+/*# sourceMappingURL=site.css.map */

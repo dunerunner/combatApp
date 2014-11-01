@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html ng-app="combatApp" ng-controller="combatController">
+    <head>
+        <title>Prepare to fight</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="css/site.css" rel="stylesheet" type="text/css"/>
+        <script src="js/libs/angular.js/angular.js" type="text/javascript"></script>
+        <script src="js/libs/angular.js/angular-sanitize.min.js" type="text/javascript"></script>
+        <script src="js/libs/angular.js/angular-route.js" type="text/javascript"></script>
+        
+    </head>
+    <body>
+        <h1 class="page_header">Prepare to fight!</h1>
+        <div class="stats" ng-show="showStats">
+            <h2 class="stats-header">Set stats</h2>
+            <div class="stats-enemycount">
+                Number of enemies: <tt>{{enemiesCount}}</tt>
+                <form name="enemiesCountForm">
+                    <input id="one" type="radio" ng-model="enemiesCount" value="1" /> <label for="one">1</label>
+                    <input id="two" type="radio" ng-model="enemiesCount" value="2" /> <label for="two">2</label>
+                    <input id="three" type="radio" ng-model="enemiesCount" value="3" /> <label for="three">3</label>
+                </form>
+                Clone: <tt>{{cloneNumber > 0 ? "Enemy " + cloneNumber : "None"}}</tt>
+                <form name="cloneForm">
+                    <input id="czero" type="radio" ng-model="cloneNumber" value="0" /> <label for="czero">None</label>
+                    <input id="cone" type="radio" ng-model="cloneNumber" value="1" /> <label for="cone">1</label>
+                    <input ng-show="enemiesCount > 1" id="ctwo" type="radio" ng-model="cloneNumber" value="2" /> <label ng-show="enemiesCount > 1" for="ctwo">2</label>
+                    <input ng-show="enemiesCount > 2" id="cthree" type="radio" ng-model="cloneNumber" value="3" /> <label ng-show="enemiesCount > 2" for="cthree">3</label>
+                </form>
+            </div>
+            <ul class="stats-list">
+                <li class="stats-list-element">
+                    <h3 class="stats-list-element__header">Player</h3>
+                    <label class="stats-list-element__label">AD:</label>
+                    <input class="stats-list-element__input" ng-model="fighterData[0].ad" type="text" />
+                    <label class="stats-list-element__label">HP:</label>
+                    <input class="stats-list-element__input" ng-model="fighterData[0].hp" type="text" />
+                    <label class="stats-list-element__label">DPH:</label>
+                    <input class="stats-list-element__input" ng-model="fighterData[0].dph" type="text" />
+                </li>
+                <li class="stats-list-element">
+                    <h3 class="stats-list-element__header">Enemy 1</h3>
+                    <label class="stats-list-element__label">AD:</label>
+                    <input class="stats-list-element__input" ng-model="fighterData[1].ad" type="text" />
+                    <label class="stats-list-element__label">HP:</label>
+                    <input class="stats-list-element__input" ng-model="fighterData[1].hp" type="text" />
+                    <label class="stats-list-element__label">DPH:</label>
+                    <input class="stats-list-element__input" ng-model="fighterData[1].dph" type="text" />
+                </li>
+                <li class="stats-list-element" ng-show="enemiesCount > 1">
+                    <h3 class="stats-list-element__header">Enemy 2</h3>
+                    <label class="stats-list-element__label">AD:</label>
+                    <input class="stats-list-element__input" ng-model="fighterData[2].ad" type="text" />
+                    <label class="stats-list-element__label">HP:</label>
+                    <input class="stats-list-element__input" ng-model="fighterData[2].hp" type="text" />
+                    <label class="stats-list-element__label">DPH:</label>
+                    <input class="stats-list-element__input" ng-model="fighterData[2].dph" value="2" type="text" />
+                </li>
+                <li class="stats-list-element" ng-show="enemiesCount > 2">
+                    <h3 class="stats-list-element__header">Enemy 3</h3>
+                    <label class="stats-list-element__label">AD:</label>
+                    <input class="stats-list-element__input" ng-model="fighterData[3].ad" type="text" />
+                    <label class="stats-list-element__label">HP:</label>
+                    <input class="stats-list-element__input" ng-model="fighterData[3].hp"type="text" />
+                    <label class="stats-list-element__label">DPH:</label>
+                    <input class="stats-list-element__input" ng-model="fighterData[3].dph" type="text" />
+                </li>
+            </ul>
+            <button class="stats-control" ng-click="generateFighters()">Start</button>
+        </div>
+        <div class="combat" ng-hide="showStats">
+            <div class="combat-player">
+                <div class="fighter">
+                    <div class="fighter-name">{{currentFighter.name}}</div>
+                    <div ng-class="{'fighter-img':true, 'player':true, 'defeated':currentFighter.currentHp < 1, 'winner':killedEnemies === enemies.length}"></div>
+                    <div class="fighter-damage">AD : {{currentFighter.ad}}</div>
+                    <div class="fighter-hpline">
+                        <div class="fighter-hpline-curhp" ng-style="{'width': currentFighter.currentHp / currentFighter.maxHp * 100 + '%'}"></div>
+                    </div>
+                    <div class="fighter-hp">
+                        HP: {{currentFighter.currentHp}} / {{currentFighter.maxHp}}
+                    </div>
+                </div>
+            </div>
+            <div class="combat-log">
+                <div class="combat-log-controls">
+                    <form class="targetselect" name="targetForm">
+                        Select target : 
+                        <input id="tone" type="radio" ng-model="selectedTarget" value="0" /> <label for="tone">1</label>
+                        <input id="ttwo" type="radio" ng-model="selectedTarget" value="1" ng-show="enemies.length > 1" /> <label for="ttwo" ng-show="enemies.length > 1">2</label>
+                        <input id="tthree" type="radio" ng-model="selectedTarget" value="2" ng-show="enemies.length > 2"/> <label for="tthree" ng-show="enemies.length > 2">3</label>
+                    </form>
+                    <button class="combat-control" ng-click="rollDice()">Next round</button>
+                </div>
+                <div class="combat-log-header">The battle begins!</div>
+                <div class="combat-log-rounds">
+                    <div class="combat-round" ng-repeat="round in fightLog">
+                        <span class="combat-round-name">{{round.name}}</span><span class="combat-round-action" ng-bind-html="round.msg"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="combat-enemies">
+                <div class="fighter" ng-repeat="enemy in enemies">
+                    <div class="fighter-name">{{enemy.name}}</div>
+                    <div ng-class="{'fighter-img':true, 'enemy':true, 'defeated':enemy.currentHp < 1}"></div>
+                    <div class="fighter-damage">AD : {{enemy.ad}}</div>
+                    <div class="fighter-hpline">
+                        <div class="fighter-hpline-curhp" ng-style="{'width': enemy.currentHp / enemy.maxHp * 100 + '%'}"></div>
+                    </div>
+                    <div class="fighter-hp">
+                        HP: {{enemy.currentHp}} / {{enemy.maxHp}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="js/app.js" type="text/javascript"></script>
+        <script src="js/controllers.js" type="text/javascript"></script>
+    </body>
+</html>
